@@ -1,0 +1,178 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="LFMS.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - My ASP.NET Application</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/ajaxtoolkit.css" rel="stylesheet" />
+    <style type="text/css">
+  .hiddencol
+  {
+    display: none;
+  }
+  .btn-hoverg:hover {
+    background-color: #066548;
+}
+  .btn-hoverb:hover {
+    background-color: #004984;
+}
+  .btn-hoverr:hover {
+    background-color: #720000;
+}
+   /* Add custom styles here */
+        .jumbotron {
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            color: white;
+        }
+        .jumbotron h1 {
+            font-size: 3em;
+        }
+        .jumbotron p {
+            font-size: 1.5em;
+        }
+        /* Add media query for smaller screens */
+        @media (max-width: 768px) {
+            .jumbotron h1 {
+                font-size: 2em;
+            }
+            .jumbotron p {
+                font-size: 1.2em;
+            }
+        }
+</style>
+
+</head>
+<body>
+
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        
+        <div class="container body-content">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="font-weight: bold; font-size: 18px" >Lost & Found Management System</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul style="font-weight: bold; font-size: 16px" class="nav navbar-nav">
+                    <%
+                        if (Session["UserID"] != null) {
+                            string userRole = Session["UserRole"].ToString();
+                            switch (userRole)
+                            {
+                                case "student":
+                                    %>
+                                    <li><a href="/Views/Student/Student_home">Home</a></li>
+                                    <li><a href="/Views/Shared/View_all_lost">Lost Items</a></li>
+                                    <li><a href="/Views/Shared/View_all_found">Found Items</a></li>
+                                    <%
+                                    break;
+                                case "employee":
+                                    %>
+                                    <li><a href="/Views/Employee/Employee_home">Home</a></li>
+                                    <li><a href="/Views/Shared/View_all_lost">Lost Items</a></li>
+                                    <li><a href="/Views/Shared/View_all_found">Found Items</a></li>
+                                    <%
+                                    break;
+                                case "admin":
+                                    %>
+                                    <li><a href="/Views/Admin/Admin_home">Home</a></li>
+                                    <li><a href="/Views/Shared/View_all_lost">Lost Items</a></li>
+                                    <li><a href="/Views/Shared/View_all_found">Found Items</a></li>
+                                    <li><a href="/Views/Admin/Manage_employee">Manage Employees</a></li>
+                                    <%
+                                    break;
+                            }
+                        }
+                    %>
+                    <li><a href="/Views/Shared/About">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <%
+                        if (Session["UserID"] != null) {
+                            if (Session["UserRole"].Equals("student")) {
+                                %>
+                                <a href="/Views/Student/Post_lost_item" class="btn btn-success btn-hoverg" style=" width: fit-content; padding: 10px; margin: 10px">Post Lost Item +</a>
+                                                    <%
+                            }
+                            else if (Session["UserRole"].Equals("employee")) {
+                                %>
+                                <a href="/Views/Employee/Post_found_item" class="btn btn-success btn-hoverg" style="width: fit-content; padding: 10px; margin: 10px">Post Found Item +</a>
+                                <%
+                            } 
+                                        else if (Session["UserRole"].Equals("admin")) {
+                                %>
+                                <a href="/Views/Admin/Add_Department" class="btn btn-success btn-hoverg" style="padding: 10px; margin: 10px">Departments</a>
+                                <%
+                            } 
+                        }
+                        if (Session["UserID"] != null) {
+                            if (!Session["UserRole"].Equals("admin"))
+                            {
+                                %>
+                                <a href="/Views/Shared/View_profile_se" class="btn btn-primary btn-hoverb" style="padding: 10px; margin: 10px">Profile</a>
+                                <%
+                            }
+                        }
+                        if (Session["UserID"] != null) {
+                            %>
+                            <asp:Button runat="server" CausesValidation="false" class="btn btn-danger btn-hoverr" Text="Sign Out" style="padding: 10px; margin: 10px" onclick="SignOutButton_Click" />
+                            
+                    <%
+                        }
+                    %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <br />
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+
+
+            <hr />
+
+
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - LFMS</p>
+            </footer>
+        </div>
+
+    </form>
+</body>
+</html>

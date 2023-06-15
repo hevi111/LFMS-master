@@ -1,0 +1,49 @@
+﻿.accordionHeader {
+    border: none;
+    color: white;
+    background-color: #5078B3;
+    padding: 10px 15px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: all 0.6s ease;
+    border-radius: 0.5rem;
+    justify-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .accordionHeader:hover {
+        background-color: #2E4d7B;
+    }
+
+.accordionHeaderSelected {
+    border: none;
+    color: white;
+    background-color: #2E4d7B;
+    padding: 10px 15px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.accordionContent {
+    background-color: #D3DEEF;
+    border: 1px solid #5078B3;
+    border-top: none;
+    padding: 10px 15px;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+    .accordionContent.hidden {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        border-width: 0;
+    }
+
+    .accordionContent.show {
+        max-height: 100%;
+        padding: 10px 15px;
+        border-width: 1px;
+    }
